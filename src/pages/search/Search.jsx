@@ -49,7 +49,7 @@ const Search = () => {
 
     return(
         <div className='app'>
-            <Navbar active="news"/>
+            <Navbar active="feed"/>
                 <div className='main'>
                     <SideLinks active="feed"/>
 
