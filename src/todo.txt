@@ -1,0 +1,12 @@
+TODO:
+
+important: FAQ, Help page
+
+1. Post should contain User's id, not it's whole data
+2. Account page / Post Page
+3. Search (account/post)
+4. Comment
+5. Follow
+6. Notifications
+7. Profile photo uploading
+8. Document sharing inside posts/comments
