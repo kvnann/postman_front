@@ -113,7 +113,7 @@ const Posts = ({user, watchingUser, type, queryObject, setResults, savedPostsDat
                 <PostCreate onPostCreate={refreshPosts}  getUser={user}/>
             }
                 {
-                    !postsLoading && posts.length > 0?
+                    !postsLoading && postsData.length > 0?
                     <div className='text-muted cp mt-5' onClick={refreshPosts}>Reload ver reload</div>:
                     ""
                 }
