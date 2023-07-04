@@ -78,7 +78,7 @@ const Posts = ({user, watchingUser, type, queryObject, setResults, savedPostsDat
             setposts(response)
             feedSet = true;
         } catch(e){
-            alert("An error occured while loading posts" + e)
+            alert("An error occured while loading posts" + e);
         }
         
     }
@@ -109,17 +109,18 @@ const Posts = ({user, watchingUser, type, queryObject, setResults, savedPostsDat
             {type === "feed" &&
                 <PostCreate onPostCreate={refreshPosts}  getUser={user}/>
             }
+            <div className='text-muted cp mt-5' onClick={refreshPosts}>Reload ver reload</div>
             {
                 postsData.map((postData,index)=>{
                     const mappedPost = <Post user={user} postData={postData} onPostDeleted={refreshPosts}  key={index} />;
                     return mappedPost;
                 })
             }
-            <div className='d-flex justify-content-center mt-5 mb-5 lr-100'>
+            <div className='d-flex justify-content-center mb-4 lr-100'>
                 {postsLoading?
                     <PostsLoading/>:
-                    part > helpers.array3x3(posts).length ? (postsData.length === 0?"No Posts Found":""):
-                    <div style={{cursor:"pointer"}} onClick={()=>{handleLoad(false)}} className='text-muted'>Load more...</div>
+                    part > helpers.array3x3(posts).length ? (postsData.length === 0?<div className='mt-4'>No Posts Found</div>:""):
+                    ""
                 }
             </div>
         </div>

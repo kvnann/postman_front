@@ -128,7 +128,7 @@ input{
   border:1px solid white;
   border-radius: 10px;
   padding:2px 15px;
-    -align: center;
+  text-align: center;
 }
 
 .input_search{
@@ -162,8 +162,10 @@ button:hover{
 
 .btn-light{
   background: white;
+  color:var(--orangered);
   border:1px solid var(--orangered);
   padding:8px 12px;
+  cursor: pointer;
   transition: .2s all;
 }
 .btn-light:hover{
@@ -173,7 +175,7 @@ button:hover{
 .btn-orangered{
   background: var(--orangered);
   border:1px solid var(--orangered);
-  padding:12px 29px;
+  padding:8px 12px;
   margin: 10px;
   transition: .2s all;
   color:white;
@@ -186,7 +188,7 @@ button:hover{
 .btn-dark{
   background: black;
   border:1px solid var(--orangered);
-  padding:12px 29px;
+  padding:8px 12px;
   margin: 10px;
   transition: .2s all;
   color:white;
@@ -396,7 +398,7 @@ textarea:focus{
   cursor: pointer;
 }
 .rounded{
-  border-radius: 100%;
+  border-radius: 50%;
 }
 .text-gray{
   color:gray;

@@ -3,6 +3,7 @@ import {config} from "../../config"
 import {helpers} from "../../helpers"
 import {AiFillStar} from "react-icons/ai"
 import {MdDelete} from "react-icons/md"
+import {Comments} from '../'
 
 const Post = ({postData, user, onPostDeleted}) => {
     const [liked, setLiked] = useState(postData?.likes?.indexOf(user.userID) > -1);
@@ -58,7 +59,7 @@ const Post = ({postData, user, onPostDeleted}) => {
         <div className={`post ${postData?.admin?"post_admin":""}`} id={postData?.postID}>
             <div className='display-4 fs-3 mb-3 d-flex align-items-center justify-content-between'>
                 <div className='d-flex align-items-center cp' onClick={()=>{window.location=`/user?u=${postData?.user?.username}`}}>
-                    <img className='user-select-none' src={config.user_default} alt={postData?.user?.username} style={{height:"40px",width:"40px",borderRadius:"100%", marginRight:"10px"}} />
+                    <img className='user-select-none' src={postData?.user?.profilePhoto?helpers.parseProfilePhoto(postData?.user?.profilePhoto):config.user_default} alt={postData?.user?.username} style={{height:"40px",width:"40px",borderRadius:"100%", marginRight:"10px"}} />
                     {postData?.user?.username} 
                     {/* {postData?.admin && <div className='text-yellow fs-6 mt-1 ml-1'><AiFillStar size={32}/></div>} */}
                 </div>
@@ -89,6 +90,8 @@ const Post = ({postData, user, onPostDeleted}) => {
                     {helpers.getDisplayString(postData?.publishDate)}
                 </div>
             </div>
+            {/* <hr /> */}
+            {/* <Comments/> */}
         </div>
       )
 }

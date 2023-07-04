@@ -45,14 +45,14 @@ const Account = () => {
 
     return(
         <div className='app'>
-            <Navbar active="account"/>
+            <Navbar active="account" user={user}/>
                 <div className=''>
                     <div className='main'>
                         <SideLinks active="account"/>
 
                         <div className='accounts_main'>
                             <div className='userProfile lr-100'>
-                                <img src={config.user_default} 
+                                <img src={user?.profilePhoto?helpers.parseProfilePhoto(user?.profilePhoto):config.user_default} 
                                 alt={`${user?.username ?user?.username:"Loading.."}`} 
                                 style={{height:"200px",width:"200px",borderRadius:"100%", border:"4px solid black", marginRight:"10px"}} />
                                 <div className='display-4'>{`${user?.username ?user?.username:"Loading..."}`}</div>

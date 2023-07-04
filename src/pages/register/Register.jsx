@@ -2,15 +2,37 @@ import {useState } from 'react';
 import axios from 'axios';
 import {config} from '../../config'
 import {Loading} from '../../components'
+import RegisterForm from './components/RegisterForm';
+import ProfilePicture from './components/ProfilePicture';
 
 const Register = () => {
+  const [loading, setLoading] = useState(false)
+  const [step, setStep] = useState(0);
+  const [errorMessage, setErrorMessage] = useState("")
+  const [selectedFile, setSelectedFile] = useState(null);
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
-  const [loading, setLoading] = useState(false)
-  const [errorMessage, setErrorMessage] = useState("")
 
-  const handleSubmit = async (e) => {
+  const handleNext = (usernameset,passwordset,emailset) => {
+    setUsername(usernameset);
+    setPassword(passwordset);
+    setEmail(emailset);
+    setErrorMessage("");
+    setStep(1);
+  }
+
+  const handlePrev = ()=>{
+    setErrorMessage("");
+    setStep(0);
+  }
+
+  const fileSelect = (e)=>{
+    setSelectedFile(e.target.files[0]);
+  }
+
+  const submit = async (e) => {
     e.preventDefault();
     if(!email || !username || !password){
       setErrorMessage("Missing field(s)")
@@ -18,13 +40,15 @@ const Register = () => {
     }
     setLoading(true);
     try {
-      const response = await axios.post(`${config.backend_host}/register`, {
-        email,
-        username,
-        password
-      },{
+      const formData = new FormData();
+      formData.append('image', selectedFile);
+      formData.append('username', username);
+      formData.append('password', password);
+      formData.append('email', email);
+
+      const response = await axios.post(`${config.backend_host}/register`, formData,{
         headers:{
-          "Content-Type":"application/json"
+          'Content-Type': 'multipart/form-data'
         }
       });
 
@@ -32,10 +56,12 @@ const Register = () => {
       localStorage.setItem("refreshToken", response.data.refreshToken);
       window.location = '/'
     } catch (error) {
-      setErrorMessage(error.response.data.message)
+      setErrorMessage(error?.response?.data?.message)
       setTimeout(()=>{
         setLoading(false)
       },200)
+    } finally{
+      setLoading(false);
     }
   };
 
@@ -52,41 +78,10 @@ const Register = () => {
             </p>
           </div>
           <div className='login_card_right'>
-            <h1 className='mb-3'>Register</h1>
-            <div className='text-warning mb-2'>{errorMessage}</div>
-            <form onSubmit={handleSubmit}>
-              <div className='text-center'>
-                <input
-                  type="text"
-                  id="username"
-                  value={username}
-                  placeholder='Username'
-                  onChange={(e) => setUsername(e.target.value)}
-                />
-              </div>
-              <div className='text-center mt-3'>
-                <input
-                  type="password"
-                  id="password"
-                  value={password}
-                  placeholder='Password'
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </div>
-              <div className='text-center mt-3'>
-                <input
-                  type="text"
-                  id="email"
-                  value={email}
-                  placeholder='Email'
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
-              <div className='text-center mt-3'>
-                <button className='mb-2' type="submit">Register</button>
-                <p className='text-light'>Already have an account? <a href="/login" className='text-light'>Login</a></p>
-              </div>
-            </form>
+            <div className='text-warning mb-2' style={{width:"100%",display:"flex",justifyContent:"center",alignItems:"center"}}><span style={{width:"200px"}}>{errorMessage}</span></div>
+            {
+              step===0?<RegisterForm handleNext={handleNext} handleErrorMessage={setErrorMessage}/>:step===1?<ProfilePicture handleFileSelect={fileSelect} handleBack={handlePrev} handleSubmit={submit}/>:"Registraiton is closed"
+            }
           </div>
         </div>
       </div>

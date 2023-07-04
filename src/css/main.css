@@ -1,0 +1,18 @@
+.comments{
+    margin-top: 10px;
+}
+.comment{
+    display: flex;
+    flex-direction: row;
+    margin-bottom:25px;
+}
+.comment_content{
+    background: #0000000e;
+    border-radius:10px;
+    padding: 3px 10px;
+    font-size: 13px;
+}
+.comment_actions{
+    font-size: 13px;
+    padding: 0 3px;
+}

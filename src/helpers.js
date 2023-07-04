@@ -133,6 +133,20 @@ helpers.handleLogout = ()=>{
   window.location = '/login'
 }
 
+helpers.parseProfilePhoto = (photoData) => {
+
+  if(!photoData){
+    return;
+  }
+
+  const uint8Array = new Uint8Array(photoData?.data);
+
+  const blob = new Blob([uint8Array], { type: photoData?.contentType });
+  const photoURL = URL.createObjectURL(blob);
+
+  return photoURL;
+};
+
 helpers.array3x3 = (arr)=>{
   const result = [];
   if(arr.length === 0){
@@ -143,6 +157,11 @@ helpers.array3x3 = (arr)=>{
     result.push(subarray);
   }
   return result;
+}
+
+helpers.isValidEmail = (email)=>{
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
 }
 
 helpers.getDisplayString = (time)=>{

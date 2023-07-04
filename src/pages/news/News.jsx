@@ -37,7 +37,7 @@ const News = () => {
 
     return(
         <div className='app'>
-            <Navbar active="news"/>
+            <Navbar active="news"  user={user}/>
                 <div className='main'>
                     <SideLinks active="news"/>
 
