@@ -14,7 +14,7 @@ const Posts = ({user, watchingUser, type, queryObject, setResults, savedPostsDat
     const [postsLoading, setPostsLoading] = useState(false);
     let feedSet = false;
     
-    const [posts, setposts] = useState([]);
+    const [posts, setposts] = useState(false);
     const [postsData, setpostsData] = useState([]);
     let firstLoad = false;
     const [part, setpart] = useState(1);
@@ -37,13 +37,15 @@ const Posts = ({user, watchingUser, type, queryObject, setResults, savedPostsDat
         if(type === 'search' && postsData.length === 0){
             await helpers.search(queryObject, "p", (err,data)=>{
                 if(!err){
-                    setpostsData([...data]);
+                    setPostsLoading(false)
+                    setpostsData(data);
                     setResults(data);
                     setpart(prev=>prev+1);
                 }
                 else{
                     console.log(err.message)
                 }
+                setPostsLoading(false)
             });
             setPostsLoading(false)
             return;
@@ -60,8 +62,9 @@ const Posts = ({user, watchingUser, type, queryObject, setResults, savedPostsDat
             setpart(prev=>prev+1);
         } catch(e){
             console.log(e);
+        }finally{
+            setPostsLoading(false)
         }
-        setPostsLoading(false)
     }   
 
     const refreshPosts = ()=>{
@@ -109,7 +112,11 @@ const Posts = ({user, watchingUser, type, queryObject, setResults, savedPostsDat
             {type === "feed" &&
                 <PostCreate onPostCreate={refreshPosts}  getUser={user}/>
             }
-            <div className='text-muted cp mt-5' onClick={refreshPosts}>Reload ver reload</div>
+                {
+                    !postsLoading && posts.length > 0?
+                    <div className='text-muted cp mt-5' onClick={refreshPosts}>Reload ver reload</div>:
+                    ""
+                }
             {
                 postsData.map((postData,index)=>{
                     const mappedPost = <Post user={user} postData={postData} onPostDeleted={refreshPosts}  key={index} />;
@@ -119,8 +126,7 @@ const Posts = ({user, watchingUser, type, queryObject, setResults, savedPostsDat
             <div className='d-flex justify-content-center mb-4 lr-100'>
                 {postsLoading?
                     <PostsLoading/>:
-                    part > helpers.array3x3(posts).length ? (postsData.length === 0?<div className='mt-4'>No Posts Found</div>:""):
-                    ""
+                    postsData.length === 0?<div className='mt-4'>No Posts Found</div>:""
                 }
             </div>
         </div>
