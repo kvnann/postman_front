@@ -41,7 +41,7 @@ const Navbar = ({active, user, pageChange}) => {
 
         <div className='cp_all d-flex justify-content-between align-items-center'>
           <div className='m-3 mb-1 btn-light user-select-none' onClick={()=>{helpers.handleLogout()}}>Logout</div>
-          <div className='m-3 mb-1 account_image' onClick={()=>{pageChange("account")}}><img width={50} height={50} style={{borderRadius:"50%"}} src={config.userData.profilePhoto ? config.userData.profilePhoto : user?.profilePhoto ? helpers.parseProfilePhoto(user.profilePhoto) : config.user_default } alt={user?.username?user?.username : "Loading..."}/></div>
+          <div className='m-3 mb-1 account_image' onClick={()=>{pageChange("account")}}><img width={50} height={50} style={{borderRadius:"50%"}} src={config.userData?.profilePhoto ? config.userData?.profilePhoto : user?.profilePhoto ? helpers.parseProfilePhoto(user.profilePhoto) : config.user_default } alt={user?.username?user?.username : "Loading..."}/></div>
         </div>
       </div>
 
