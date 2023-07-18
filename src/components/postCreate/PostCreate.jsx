@@ -27,7 +27,7 @@ const PostCreate = ({onPostCreate,getUser}) => {
             <div className='display-4 orm-control fs-3 mb-3'>New Post</div>
             <textarea 
                 id="postCreateText" 
-                placeholder={`What did you experience today, ${getUser.username}?`}
+                placeholder={`What did you experience today, ${getUser?.username}?`}
                 value={postText} 
                 onChange={(e) => setPostText(e.target.value)} 
                 className='mTextbox mb-3' 
