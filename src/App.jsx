@@ -27,6 +27,9 @@ const App = ({initialPage}) => {
 
     const authentication = async()=>{
         if(!auth && !authStarted){
+            if(!localStorage.getItem("accessToken") && !localStorage.getItem("refreshToken")){
+                window.location="/register"
+            }
             authStarted = true
             const {newAuth,userData} = await helpers.auth();
             if(!newAuth){
@@ -70,7 +73,6 @@ const App = ({initialPage}) => {
                         <h1 className='display-3'>404 Not Found</h1>:
                         <PostsLoading/>
                     }
-                    
                     <div className='main-right text-muted'>
 
                     </div>
