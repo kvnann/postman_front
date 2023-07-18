@@ -15,9 +15,6 @@ const EditAccount = ({handleBack}) => {
     const handleUpdate = async(e)=>{
       e.preventDefault();
       setLoading(true);
-      console.log(selectedFile)
-      console.log(username)
-      console.log(email)
       try {
         const formData = new FormData();
 
@@ -117,7 +114,7 @@ const EditAccount = ({handleBack}) => {
                 id="username"
                 className='bordered'
                 value={username}
-                placeholder={config.userData.username}
+                placeholder={config?.userData?.username}
                 onChange={(e) => setUsername(e.target.value)}
               />
             </div>
@@ -127,7 +124,7 @@ const EditAccount = ({handleBack}) => {
                 className='bordered'
                 id="email"
                 value={email}
-                placeholder={config.userData.email}
+                placeholder={config?.userData?.email}
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
