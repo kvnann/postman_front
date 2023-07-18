@@ -74,7 +74,7 @@ const Register = () => {
           <div className='login_card_left'>
             <h1 className='display-4'>Welcome!</h1>
             <p className='text-muted'>
-              Register now for free and know what's going on!
+              Register now for free and see what's going on!
             </p>
           </div>
           <div className='login_card_right'>

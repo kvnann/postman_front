@@ -139,6 +139,19 @@ input{
   min-width:400px;
 }
 
+.add_comment{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.comment_input{
+  padding:8px 12px;
+  border: 1px solid black;
+  width: 90%;
+}
+
+
 .box_search{
   display: flex;
   justify-content: center;
@@ -540,6 +553,7 @@ textarea:focus{
     max-width: 95%;
     margin-top: 55px;
   }
+
   .app{
     margin-top: 160px;
   }

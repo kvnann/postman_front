@@ -3,16 +3,26 @@ import './css/main.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react'
 import {useState, useEffect} from 'react'
+import { useLocation } from 'react-router-dom';
 import {helpers} from './helpers'
-import {Loading, Navbar, Posts, SideLinks, PostsLoading} from './components'
+import {config} from './config'
+import {Loading, Navbar, Posts, News, AllPosts, SideLinks, PostsLoading} from './components'
+import {Account} from './pages'
 
-const App = () => {
+const App = ({initialPage}) => {
     const [auth, setAuth] = useState(false);
     let authStarted = false;
 
+    const [page, setPage] = useState(
+        initialPage=="feed"?"feed":
+        initialPage=="news"?"news":
+        initialPage=="account"?"account":
+        "feed"    
+    )
+
     const [user, setuser] = useState();
     
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     
 
     const authentication = async()=>{
@@ -20,6 +30,7 @@ const App = () => {
             authStarted = true
             const {newAuth,userData} = await helpers.auth();
             if(!newAuth){
+                alert("Session expired, please login")
                 window.location='/login'
             }
             setAuth(newAuth);
@@ -34,21 +45,29 @@ const App = () => {
     
     useEffect(() => {
         if(auth && user){
+            helpers.setUserConfig(user);
             setLoading(false)
         }
-    }, [auth, user])
+    }, [auth, user]);
 
+
+    const handlePageChange = (nextPage)=>{
+        setPage(nextPage);
+    }
 
 
 
     return(
         <div className='app'>
-            <Navbar user={user} active="feed"/>
+            <Navbar user={user} active={page} pageChange={handlePageChange}/>
                 <div className='main'>
-                    <SideLinks active="feed"/>
+                    <SideLinks active={page} pageChange={handlePageChange}/>
 
                     {!loading?
-                        <Posts user={user} type="feed"/>:
+                        page==="feed"?<AllPosts user={config.userData}/>:
+                        page==="news"?<News user={user}/>:
+                        page==="account"?<Account/>:
+                        <h1 className='display-3'>404 Not Found</h1>:
                         <PostsLoading/>
                     }
                     <div className='main-right text-muted'>

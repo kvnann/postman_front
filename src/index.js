@@ -15,15 +15,15 @@ const router = createBrowserRouter([
   },
   {
     path:'/feed',
-    element:<App/>
+    element:<App initialPage="feed"/>
   },
   {
     path:'/account',
-    element:<Account/>
+    element:<App initialPage="account"/>
   },
   {
     path:'/news',
-    element:<News/>
+    element:<App initialPage="news"/>
   },
   {
     path:'/login',

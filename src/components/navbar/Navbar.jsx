@@ -4,7 +4,7 @@ import {helpers} from '../../helpers'
 import {config} from '../../config'
 import {BsSearch} from 'react-icons/bs'
 
-const Navbar = ({active, user}) => {
+const Navbar = ({active, user, pageChange}) => {
   // window.onscroll = function() {myFunction()};
   // function myFunction() {
   //   var navbar = document.querySelector(".nav_bg");
@@ -14,14 +14,12 @@ const Navbar = ({active, user}) => {
   //     navbar.classList.remove("sticky");
   //   }
   // }
-  useEffect(()=>{
-      document.querySelector(`#nav__active-${active}`)?.classList.add("navbar-active");
-  });
+
   const linkTo = (linkParam) =>{
     window.location = `${linkParam}`;
   }
 
-  const handleLogoClick = ()=>{window.location='feed'};
+  const handleLogoClick = ()=>{pageChange("feed")};
 
   const handleSearch = (e)=>{
     e.preventDefault();
@@ -43,7 +41,7 @@ const Navbar = ({active, user}) => {
 
         <div className='cp_all d-flex justify-content-between align-items-center'>
           <div className='m-3 mb-1 btn-light user-select-none' onClick={()=>{helpers.handleLogout()}}>Logout</div>
-          <div className='m-3 mb-1 account_image' onClick={()=>{window.location="/account"}}><img width={50} height={50} style={{borderRadius:"50%"}} src={user?.profilePhoto?helpers.parseProfilePhoto(user?.profilePhoto):config.user_default} alt={user?.username?user?.username : "Loading..."}/></div>
+          <div className='m-3 mb-1 account_image' onClick={()=>{pageChange("account")}}><img width={50} height={50} style={{borderRadius:"50%"}} src={config.userData.profilePhoto ? config.userData.profilePhoto : user?.profilePhoto ? helpers.parseProfilePhoto(user.profilePhoto) : config.user_default } alt={user?.username?user?.username : "Loading..."}/></div>
         </div>
       </div>
 
@@ -55,14 +53,14 @@ const Navbar = ({active, user}) => {
             </form>
           </div>
         <div className="mnavbar">
-          <div  onClick={()=>{linkTo("/feed")}} id='nav__active-feed' className="mnavbar_element d-flex justify-content-center align-items-center">
+          <div onClick={()=>{pageChange("feed")}} id='nav__active-feed' className={`mnavbar_element d-flex justify-content-center align-items-center ${active==="feed"?"navbar-active":""}`}>
             Feed
           </div>
-          <div onClick={()=>{linkTo("/news")}} id='nav__active-news' className="mnavbar_element d-flex justify-content-center align-items-center">
+          <div onClick={()=>{pageChange("news")}} id='nav__active-news' className={`mnavbar_element d-flex justify-content-center align-items-center ${active==="news"?"navbar-active":""}`}>
             News
           </div>
-          <div onClick={()=>{linkTo("/account")}} id='nav__active-account' className="mnavbar_element d-flex justify-content-center align-items-center">
-            My Profile
+          <div onClick={()=>{pageChange("account")}} id='nav__active-account' className={`mnavbar_element d-flex justify-content-center align-items-center ${active==="account"?"navbar-active":""}`}>
+            My Account
           </div>
         </div>
       </div>

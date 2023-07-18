@@ -8,6 +8,9 @@ import {Comments} from '../'
 const Post = ({postData, user, onPostDeleted}) => {
     const [liked, setLiked] = useState(postData?.likes?.indexOf(user.userID) > -1);
     const [likedPostCount,setlikedPostCount] = useState(postData?.likes?.length);
+
+    const [commentShow, setCommentShow] = useState(false);
+
     const handleLike = async()=>{
         const state = !liked
         setLiked(state);
@@ -38,7 +41,7 @@ const Post = ({postData, user, onPostDeleted}) => {
         }
     }
     const handleComment = ()=>{
-        alert("Commenting is not available yet :,)");
+        setCommentShow(prev=>!prev);
     }
     const handleDelete = async()=>{
         try{
@@ -81,8 +84,8 @@ const Post = ({postData, user, onPostDeleted}) => {
                     <div id="likeButton" className='text-gray' style={{cursor:"pointer"}} onClick={handleLike}>
                     {liked?<span className='text-danger'>Liked</span>:"Like"} {`(${likedPostCount})`}
                     </div>
-                    <div id="commentButton" className='text-gray ml-2' style={{cursor:"pointer"}} onClick={handleComment}>
-                        Comments
+                    <div id="commentButton" className={`${commentShow?"text-danger":"text-gray"} ml-2`} style={{cursor:"pointer"}} onClick={handleComment}>
+                        Comments ({postData?.comments.length})
                     </div>
                 </div>
 
@@ -90,8 +93,13 @@ const Post = ({postData, user, onPostDeleted}) => {
                     {helpers.getDisplayString(postData?.publishDate)}
                 </div>
             </div>
-            {/* <hr /> */}
-            {/* <Comments/> */}
+            {
+                commentShow &&  
+                <div>
+                    <hr />
+                    <Comments postData={postData}/>
+                </div>
+            }
         </div>
       )
 }

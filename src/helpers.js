@@ -32,14 +32,20 @@ helpers.post = async(url, data, reqHeaders)=>{
         return "Please provide a url"
     }
     
-    headers["Content-Type"] = "application/json"
+    if(!headers["Content-Type"]){
+      headers["Content-Type"] = "application/json"
+    }
     headers["accesstoken"] = `Bearer ${localStorage.getItem('accessToken')}`
     headers["refreshtoken"] = `Refresh ${localStorage.getItem('refreshToken')}`
 
-
-    let response = await axios.post(url,data,{headers});
-    return response;
-
+    try{
+      let response = await axios.post(url,data,{headers});
+      return response;
+    }
+    catch(e){
+      return false
+    }
+    
 }
 
 helpers.auth = async()=>{
@@ -144,8 +150,15 @@ helpers.parseProfilePhoto = (photoData) => {
   const blob = new Blob([uint8Array], { type: photoData?.contentType });
   const photoURL = URL.createObjectURL(blob);
 
+
   return photoURL;
 };
+
+helpers.setUserConfig = (user)=>{
+  user.profilePhoto = user?.profilePhoto ? helpers.parseProfilePhoto(user?.profilePhoto):config.user_default;
+  config.userData = user;
+}
+
 
 helpers.array3x3 = (arr)=>{
   const result = [];
@@ -162,6 +175,69 @@ helpers.array3x3 = (arr)=>{
 helpers.isValidEmail = (email)=>{
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
+}
+
+helpers.addComment = async(postID, text, userID, callback)=>{
+  if(!postID || !text || !userID){
+    return callback({message:"Missing required fields, please try again"});
+  }
+  try{
+    const response = await helpers.post(`${config.backend_host}/post/add_comment`, {postID, text, userID});
+    if(response?.data){
+      return callback(false,response.data);
+    }
+  } 
+  catch(e){
+    callback({message:"An error occured: " + e});
+  }
+}
+
+// helpers.base64ToArrayBuffer = (base64) => {
+//   var binary_string = window.atob(base64);
+//   var len = binary_string.length;
+//   var bytes = new Uint8Array(len);
+//   for (var i = 0; i < len; i++) {
+//   bytes[i] = binary_string.charCodeAt(i);
+//   }
+//   return bytes.buffer;
+//   }
+
+helpers.deleteComment = async(commentID, callback)=>{
+  if(!commentID){
+    return callback({message:"Missing required fields, please try again"});
+  }
+  try{
+    const response = await helpers.post(`${config.backend_host}/post/delete_comment`, {
+      commentID
+    });
+    if(response.status === 200){
+      return callback(false,response.data);
+    }
+  } 
+  catch(e){
+    callback({message:"An error occured: " + e});
+  }
+}
+
+helpers.loadComments = async(postID, part, callback)=>{
+  try{
+    let response = await axios.post(`${config.backend_host}/post/load_comments`,{
+      postID,
+      part
+    }, {
+        headers:{
+            "Content-Type":"application/json",
+            "accesstoken":`Bearer ${localStorage.getItem('accessToken')}`,
+            "refreshtoken":`Refresh ${localStorage.getItem('refreshToken')}`
+        }
+      }
+    );
+
+    return callback(false,response);
+
+  }catch(e){
+    callback({message:"An error occured: "+e});
+  }
 }
 
 helpers.getDisplayString = (time)=>{
@@ -188,6 +264,8 @@ helpers.getDisplayString = (time)=>{
     return `${years} year${years > 1 ? 's' : ''} ago`;
   }
 }
+
+
 
 helpers.sortByPublishDate = (posts) => {
   const sortedPosts = [...posts];

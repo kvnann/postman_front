@@ -15,7 +15,6 @@ const ProfilePicture = ({handleBack, handleFileSelect, handleSubmit}) => {
           <input type='submit' className='btn-light' value="Register"/>
         </div>
       </form>
-
     </div>
   )
 }

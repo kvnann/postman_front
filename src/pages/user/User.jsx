@@ -26,8 +26,8 @@ const User = () => {
             authStarted = true;
             const {newAuth, userData, watchingUserData} = await helpers.getUserAndAuth(username);
             if(!newAuth){
-                alert("Session expired");
-                window.location='/login';
+                alert("Cannot show the user page. Maybe it doesn't exist");
+                window.location= "feed"
             }
             setAuth(newAuth);
             setuser(userData);
@@ -49,13 +49,17 @@ const User = () => {
         }
     }, [auth, user]);
 
+    const handlePageChange = (nextPage)=>{
+        window.location=nextPage
+    }
+
 
     return(
         <div className='app'>
-            <Navbar active="feed"/>
+            <Navbar active="feed" pageChange={handlePageChange}/>
                 <div className=''>
                     <div className='main'>
-                        <SideLinks active="feed"/>
+                        <SideLinks active="feed" pageChange={handlePageChange}/>
 
                         <div className='accounts_main'>
                             <div className='userProfile lr-100'>

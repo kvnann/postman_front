@@ -13,14 +13,16 @@ const Posts = ({user, watchingUser, type, queryObject, setResults, savedPostsDat
 
     const [postsLoading, setPostsLoading] = useState(false);
     let feedSet = false;
-    
+
+    const [responseCame, setResponseCame] = useState(false);
+
     const [posts, setposts] = useState(false);
     const [postsData, setpostsData] = useState([]);
     let firstLoad = false;
     const [part, setpart] = useState(1);
 
     const handleLoad = async(first)=>{
-
+        
         if(savedPostsData || savedPostsData?.length === 0){
             setpostsData(savedPostsData);
             return;
@@ -30,8 +32,9 @@ const Posts = ({user, watchingUser, type, queryObject, setResults, savedPostsDat
             return;
         }
 
+        
         firstLoad = true;        
-
+        
         setPostsLoading(true)
 
         if(type === 'search' && postsData.length === 0){
@@ -69,8 +72,9 @@ const Posts = ({user, watchingUser, type, queryObject, setResults, savedPostsDat
 
     const refreshPosts = ()=>{
         setpostsData([]);
-        setposts([]);
+        setposts(false);
         setpart(1)
+        setResponseCame(false)
         setFeed();
     }
 
@@ -78,7 +82,8 @@ const Posts = ({user, watchingUser, type, queryObject, setResults, savedPostsDat
     const setFeed = async()=>{
         try{
             const response = await helpers.getPosts(type,watchingUser.userID);
-            setposts(response)
+            setposts(response);
+            setResponseCame(true)
             feedSet = true;
         } catch(e){
             alert("An error occured while loading posts" + e);
@@ -100,7 +105,7 @@ const Posts = ({user, watchingUser, type, queryObject, setResults, savedPostsDat
     },[user]);
     
     useEffect(()=>{
-        if(posts){
+        if(posts?.length > -1){
             handleLoad(true);
         }
     },[posts]);
@@ -114,7 +119,7 @@ const Posts = ({user, watchingUser, type, queryObject, setResults, savedPostsDat
             }
                 {
                     !postsLoading && postsData.length > 0?
-                    <div className='text-muted cp mt-5' onClick={refreshPosts}>Reload ver reload</div>:
+                    <div className='text-muted cp mt-5' onClick={refreshPosts}>Reload Posts</div>:
                     ""
                 }
             {
@@ -124,9 +129,14 @@ const Posts = ({user, watchingUser, type, queryObject, setResults, savedPostsDat
                 })
             }
             <div className='d-flex justify-content-center mb-4 lr-100'>
+                {
+                    !postsLoading && posts.length > postsData.length ? <div className="cp mt-2" onClick={()=>{handleLoad(false)}}>Load More</div> : ""
+                }
                 {postsLoading?
                     <PostsLoading/>:
-                    postsData.length === 0?<div className='mt-4'>No Posts Found</div>:""
+                    postsData.length === 0? (responseCame ?
+                    <div className='mt-4'>No Posts Found</div>:<PostsLoading/>) : ""
+
                 }
             </div>
         </div>
