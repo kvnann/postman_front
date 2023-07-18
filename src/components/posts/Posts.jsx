@@ -81,7 +81,7 @@ const Posts = ({user, watchingUser, type, queryObject, setResults, savedPostsDat
 
     const setFeed = async()=>{
         try{
-            const response = await helpers.getPosts(type,watchingUser?.userID);
+            const response = await helpers.getPosts(type,watchingUser.userID);
             setposts(response);
             setResponseCame(true)
             feedSet = true;
