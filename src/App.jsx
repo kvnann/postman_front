@@ -67,7 +67,7 @@ const App = ({initialPage}) => {
                     <SideLinks active={page} pageChange={handlePageChange}/>
 
                     {!loading?
-                        page==="feed"?<AllPosts user={config.userData}/>:
+                        page==="feed"?<AllPosts user={user}/>:
                         page==="news"?<News user={user}/>:
                         page==="account"?<Account/>:
                         <h1 className='display-3'>404 Not Found</h1>:
