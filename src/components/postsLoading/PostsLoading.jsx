@@ -3,7 +3,7 @@ import { PostLoading } from '..'
 
 const PostsLoading = () => {
   return (
-    <div className="posts">
+    <div className="posts lr-100">
         <PostLoading/>
         <PostLoading/>
         <PostLoading/>

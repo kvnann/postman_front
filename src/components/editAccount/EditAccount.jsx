@@ -15,6 +15,9 @@ const EditAccount = ({handleBack}) => {
     const handleUpdate = async(e)=>{
       e.preventDefault();
       setLoading(true);
+      console.log(selectedFile)
+      console.log(username)
+      console.log(email)
       try {
         const formData = new FormData();
 
@@ -94,7 +97,7 @@ const EditAccount = ({handleBack}) => {
             <div className='d-flex align-items-center flex-column mb-4'>
               <div className='display-4 fs-3 mb-3'>Edit Profile Picture</div>
               <div className='image_container rounded mb-2'>
-                <img src={filePreview? filePreview : config.userData.profilePhoto}  alt="Profile pic upload" style={{borderRadius:"50%"}} width="150" height="150"/>
+                <img src={filePreview? filePreview : config.userData?.profilePhoto ? config.userData?.profilePhoto : config.user_default}  alt="Profile pic upload" style={{borderRadius:"50%"}} width="150" height="150"/>
               </div>
                 <input type="file" onChange={(e)=>{
                     setSelectedFile(e.target.files[0]);
@@ -114,7 +117,7 @@ const EditAccount = ({handleBack}) => {
                 id="username"
                 className='bordered'
                 value={username}
-                placeholder={config?.userData?.username}
+                placeholder={config?.userData?.username ? config?.userData?.username : "Loading..."}
                 onChange={(e) => setUsername(e.target.value)}
               />
             </div>
@@ -124,7 +127,7 @@ const EditAccount = ({handleBack}) => {
                 className='bordered'
                 id="email"
                 value={email}
-                placeholder={config?.userData?.email}
+                placeholder={config?.userData?.email ? config?.userData?.email : "Loading..."}
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>

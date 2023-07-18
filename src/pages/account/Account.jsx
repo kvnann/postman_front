@@ -50,7 +50,7 @@ const Account = () => {
             {!editAccount &&
             <div>
                 <div className='userProfile lr-100'>
-                    <img src={config.userData.profilePhoto}
+                    <img src={config.userData?.profilePhoto ? config.userData?.profilePhoto : config.user_default}
                     alt={`${user?.username ?user?.username:"Loading.."}`} 
                     style={{height:"200px",width:"200px",borderRadius:"100%", border:"4px solid black", marginRight:"10px"}} />
                     <div className='display-4'>{`${config.userData?.username ? config.userData?.username:"Loading..."}`}</div>
@@ -74,7 +74,7 @@ const Account = () => {
                     }}>Liked</a>
                 </div>
                 
-                <div className='account_post_show' id="account_post_show">
+                <div className='account_post_show lr-100' id="account_post_show">
                 {loading? 
                     <PostsLoading/>:
                     <div className='account_post_show'>
