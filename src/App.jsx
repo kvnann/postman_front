@@ -70,6 +70,7 @@ const App = ({initialPage}) => {
                         <h1 className='display-3'>404 Not Found</h1>:
                         <PostsLoading/>
                     }
+                    
                     <div className='main-right text-muted'>
 
                     </div>
