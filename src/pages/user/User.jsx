@@ -64,9 +64,9 @@ const User = () => {
                         <div className='accounts_main'>
                             <div className='userProfile lr-100'>
                                 <img src={config.user_default} 
-                                alt={`${watchingUser?.username ?watchingUser?.username:"Loading.."}`} 
+                                alt={`${watchingUser?.username ? watchingUser?.username:"Loading.."}`} 
                                 style={{height:"200px",width:"200px",borderRadius:"100%", border:"4px solid black", marginRight:"10px"}} />
-                                <div className='display-4'>{`${watchingUser?.username ?watchingUser?.username:"Loading..."}`}</div>
+                                <div className='display-4'>{`${watchingUser?.username ? watchingUser?.username:"Loading..."}`}</div>
                             </div>
                             <div className='cp_all margin-between-2 d-flex mt-4 fs-5 justify-content-center normal_a_tag'>
                                 <a href="#account_post_show" className={`${userPosts?"":"text-muted"}`} onClick={()=>{

@@ -8,7 +8,7 @@ const PostCreate = ({onPostCreate,getUser}) => {
         e.preventDefault();
         const response = await helpers.post(`${config.backend_host}/post/create`,{text:postText},undefined);
         if(response.error){
-            console.log(response.error);
+            console.log(response?.error);
             return;
         }
         if(response && response.status === 200){

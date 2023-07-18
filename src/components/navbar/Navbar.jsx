@@ -4,7 +4,7 @@ import {helpers} from '../../helpers'
 import {config} from '../../config'
 import {BsSearch} from 'react-icons/bs'
 
-const Navbar = ({active, user, pageChange}) => {
+const Navbar = ({active, user, pageChange, seperate}) => {
   // window.onscroll = function() {myFunction()};
   // function myFunction() {
   //   var navbar = document.querySelector(".nav_bg");
@@ -48,18 +48,39 @@ const Navbar = ({active, user, pageChange}) => {
       <div className="mt-3 nav_bg user-select-none">
           <div>
             <form onSubmit={handleSearch} className='form_search'>
-              <input className='input_search' name="searchQuery " placeholder="Search..." type="text"/>
-              <input type="submit" name="submit" value="Search" />
+              <input className='input_search' name="searchQuery" required placeholder="Search..." type="text"/>
+              <input type="submit" name="submit" value="Search" style={{color:"black"}} />
             </form>
           </div>
         <div className="mnavbar">
-          <div onClick={()=>{pageChange("feed")}} id='nav__active-feed' className={`mnavbar_element d-flex justify-content-center align-items-center ${active==="feed"?"navbar-active":""}`}>
+          <div onClick={()=>{
+            if(seperate){
+              linkTo("feed")
+            }
+            else{
+              pageChange("feed");
+            }
+            }} id='nav__active-feed' className={`mnavbar_element d-flex justify-content-center align-items-center ${active==="feed"?"navbar-active":""}`}>
             Feed
           </div>
-          <div onClick={()=>{pageChange("news")}} id='nav__active-news' className={`mnavbar_element d-flex justify-content-center align-items-center ${active==="news"?"navbar-active":""}`}>
+          <div onClick={()=>{
+            if(seperate){
+              linkTo("news")
+            }
+            else{
+              pageChange("news");
+            }
+            }} id='nav__active-news' className={`mnavbar_element d-flex justify-content-center align-items-center ${active==="news"?"navbar-active":""}`}>
             News
           </div>
-          <div onClick={()=>{pageChange("account")}} id='nav__active-account' className={`mnavbar_element d-flex justify-content-center align-items-center ${active==="account"?"navbar-active":""}`}>
+          <div onClick={()=>{
+            if(seperate){
+              linkTo("account")
+            }
+            else{
+              pageChange("account")
+            }
+            }} id='nav__active-account' className={`mnavbar_element d-flex justify-content-center align-items-center ${active==="account"?"navbar-active":""}`}>
             My Account
           </div>
         </div>

@@ -52,8 +52,8 @@ const Register = () => {
         }
       });
 
-      localStorage.setItem("accessToken", response.data.accessToken);
-      localStorage.setItem("refreshToken", response.data.refreshToken);
+      localStorage.setItem("accessToken", response?.data?.accessToken);
+      localStorage.setItem("refreshToken", response?.data?.refreshToken);
       window.location = '/'
     } catch (error) {
       setErrorMessage(error?.response?.data?.message)

@@ -49,9 +49,9 @@ const Search = () => {
 
     return(
         <div className='app'>
-            <Navbar active="feed"/>
+            <Navbar active="feed" seperate={true}/>
                 <div className='main'>
-                    <SideLinks active="feed"/>
+                    <SideLinks active="feed" seperate={true}/>
 
                     <div className='mobile_w100 mobile_mt40'>
                     <div className='cp_all margin-between-2 d-flex mt-4 fs-5 justify-content-center normal_a_tag'>

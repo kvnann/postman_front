@@ -4,9 +4,9 @@ import {Navbar} from '../../components'
 const NotFound = () => {
   return (
     <div className='app'>
-        <Navbar active=""/>
-        <div className='display-1 centered'>
-          404 Page Not Fouund :{`(`}
+        <Navbar active="" seperate={true}/>
+        <div className='display-1 centered p-4'>
+          404 Page Not Found
         </div>
     </div>
   )

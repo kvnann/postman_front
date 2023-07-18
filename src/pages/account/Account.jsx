@@ -51,7 +51,7 @@ const Account = () => {
             <div className='lr-100'>
                 <div className='userProfile lr-100'>
                     <img src={config.userData?.profilePhoto ? config.userData?.profilePhoto : config.user_default}
-                    alt={`${user?.username ?user?.username:"Loading.."}`} 
+                    alt={`${user?.username ? user?.username:"Loading.."}`} 
                     style={{height:"200px",width:"200px",borderRadius:"100%", border:"4px solid black", marginRight:"10px"}} />
                     <div className='display-4'>{`${config.userData?.username ? config.userData?.username:"Loading..."}`}</div>
                 </div>

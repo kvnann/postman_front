@@ -25,12 +25,12 @@ const Login = () => {
           "Content-Type":"application/json"
         }
       });
-      localStorage.setItem("accessToken", response.data.accessToken);
-      localStorage.setItem("refreshToken", response.data.refreshToken);
+      localStorage.setItem("accessToken", response?.data?.accessToken);
+      localStorage.setItem("refreshToken", response?.data?.refreshToken);
       window.location = '/'
     } catch (error) {
       try{
-        setErrorMessage(error.response.data.message)
+        setErrorMessage(error?.response?.data?.message)
 
       }catch(e){
         setErrorMessage("Internal server error")

@@ -4,7 +4,7 @@ import {Comment} from '../'
 import {config} from '../../config'
 const Comments = ({postData}) => {
   let [part,setPart] = useState(1);
-  let totalParts = (postData.comments.length - postData.comments.length%3)/3 + 1;
+  let totalParts = (postData?.comments?.length - postData?.comments?.length%3)/3 + 1;
   let firstLoad = false;
 
   const [commentsData,setCommentsData] = useState([])
@@ -22,7 +22,7 @@ const Comments = ({postData}) => {
     helpers.addComment(postData.postID, text, config?.userData?.userID, (err,data)=>{
       if(!err){
         setCommentsData([...commentsData, data]);
-        postData.comments.push(data.commentID);
+        postData.comments.push(data?.commentID);
       }
       else{
         console.log(err)
@@ -33,7 +33,7 @@ const Comments = ({postData}) => {
 
   const handleDelete = (deletedCommentID)=>{
     if(deletedCommentID){
-      const deletedCommentIndex = commentsData.findIndex(element=>element.commentID === deletedCommentID);
+      const deletedCommentIndex = commentsData.findIndex(element=>element?.commentID === deletedCommentID);
       const updatedCommentsData = [...commentsData];
       updatedCommentsData.splice(deletedCommentIndex,1);
       setCommentsData(updatedCommentsData);
@@ -45,7 +45,7 @@ const Comments = ({postData}) => {
     if(!first && part > totalParts){
       return;
     }
-    if(commentsData.length > postData.comments.length){
+    if(commentsData?.length > postData?.comments?.length){
       return;
     }
     if(first && firstLoad){
@@ -53,7 +53,7 @@ const Comments = ({postData}) => {
     }
     firstLoad = true;
     try{
-      helpers.loadComments(postData.postID, first?part:part+1, (err,response)=>{
+      helpers.loadComments(postData?.postID, first?part:part+1, (err,response)=>{
         if(!err){
           setCommentsData([...commentsData, ...response?.data]);
         }
@@ -70,7 +70,7 @@ const Comments = ({postData}) => {
 
   useEffect(()=>{
     if(commentsData.length > 0){
-      const partLength = (commentsData.length - commentsData.length%3)/3
+      const partLength = (commentsData?.length - commentsData?.length%3)/3
       setPart(partLength)
     }
   },[commentsData])
@@ -96,9 +96,9 @@ const Comments = ({postData}) => {
             }
         /> */}
               {
-                (!postData.comments || postData.comments.length === 0) ? 
+                (!postData?.comments || postData?.comments?.length === 0) ? 
                 <div>No comments yet</div>:
-                commentsData && commentsData.length === 0 ? <div>Loading....</div>:""
+                commentsData && commentsData?.length === 0 ? <div>Loading....</div>:""
               }
 
               {
@@ -109,7 +109,7 @@ const Comments = ({postData}) => {
               }
 
               {
-                part !== totalParts && postData.comments.length !== 0 && commentsData.length !== 0 && commentsData.length !== postData.comments.length ? <div className='cp' onClick={()=>{loadComments(false)}}>Load More</div>: ""
+                part !== totalParts && postData?.comments?.length !== 0 && commentsData?.length !== 0 && commentsData?.length !== postData?.comments?.length ? <div className='cp' onClick={()=>{loadComments(false)}}>Load More</div>: ""
               }
               <div>
                 <form style={{width:"100%"}} onSubmit={handleComment}>

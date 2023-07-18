@@ -36,7 +36,7 @@ const Users = ({user, type, queryObject, setResults, savedUsersData}) => {
                     // setpart(prev=>prev+1);
                 }
                 else{
-                    console.log(err.message)
+                    console.log(err?.message)
                 }
                 setUsersLoading(false)
             });
@@ -81,7 +81,6 @@ const Users = ({user, type, queryObject, setResults, savedUsersData}) => {
     useEffect(()=>{
         if(!feedSet && user){
             if(type==="search"){
-                console.log("Oke girdim")
                 feedSet = true;
                 handleLoad(true);
             }
@@ -139,7 +138,7 @@ const Users = ({user, type, queryObject, setResults, savedUsersData}) => {
             <div className='d-flex justify-content-center mt-5 mb-5 lr-100'>
                 {usersLoading?
                     <PostsLoading/>:
-                    type==="search" && usersData.length === 0?"No Accounts Found":"" // part > helpers.array3x3(users).length ?
+                    type==="search" && usersData?.length === 0?"No Accounts Found":"" // part > helpers.array3x3(users).length ?
                     // :<div style={{cursor:"pointer"}} onClick={()=>{handleLoad(false)}} className='text-muted'>Load more...</div>
                 }
             </div>

@@ -21,7 +21,7 @@ const Post = ({postData, user, onPostDeleted}) => {
             setlikedPostCount(prev=>prev-1)
         }
         try{
-            const response = await helpers.post(`${config.backend_host}/post/like`,{postID:postData.postID,state});
+            const response = await helpers.post(`${config.backend_host}/post/like`,{postID:postData?.postID,state});
             if(response.status !== 200){
                 setLiked(!state);
                 if(state){
@@ -45,8 +45,7 @@ const Post = ({postData, user, onPostDeleted}) => {
     }
     const handleDelete = async()=>{
         try{
-            const response = await helpers.post(`${config.backend_host}/post/delete`,{postID:postData.postID});
-            console.log(response)
+            const response = await helpers.post(`${config.backend_host}/post/delete`,{postID:postData?.postID});
             if(response?.status !== 200){
                 alert(response?.data?.message);
                 return;

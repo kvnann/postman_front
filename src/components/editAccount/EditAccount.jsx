@@ -33,7 +33,7 @@ const EditAccount = ({handleBack}) => {
           }
           formData.append('username', username);
         }
-        if(email && email !== config.userData.email){
+        if(email && email !== config.userData?.email){
           if(helpers.isValidEmail(email)){
             formData.append('email', email);
           }
@@ -43,7 +43,7 @@ const EditAccount = ({handleBack}) => {
         }
 
 
-        if(!selectedFile && (!username || username === config.userData.username) && (!email || email === config.userData.email)){
+        if(!selectedFile && (!username || username === config.userData?.username) && (!email || email === config.userData?.email)){
           setErrorMessage("You didn't make any update");
           return;
         }
@@ -75,13 +75,13 @@ const EditAccount = ({handleBack}) => {
     }
 
     const handleFileUpload = (event) => {
-      const file = event.target.files[0];
+      const file = event?.target?.files[0];
       
       if (file) {
         const reader = new FileReader();
     
         reader.onload = (e) => {
-          const uploadedPhoto = e.target.result;
+          const uploadedPhoto = e?.target?.result;
           setFilePreview(uploadedPhoto);
         };
     

@@ -42,7 +42,7 @@ const router = createBrowserRouter([
     element:<User/>
   },
   {
-    path:'/not-found',
+    path:'*',
     element:<NotFound/>
   }
 ])

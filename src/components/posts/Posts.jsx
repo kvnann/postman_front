@@ -25,6 +25,7 @@ const Posts = ({user, watchingUser, type, queryObject, setResults, savedPostsDat
         
         if(savedPostsData || savedPostsData?.length === 0){
             setpostsData(savedPostsData);
+            setResponseCame(true)
             return;
         }
 
@@ -38,6 +39,7 @@ const Posts = ({user, watchingUser, type, queryObject, setResults, savedPostsDat
         setPostsLoading(true)
 
         if(type === 'search' && postsData.length === 0){
+            
             await helpers.search(queryObject, "p", (err,data)=>{
                 if(!err){
                     setPostsLoading(false)
@@ -46,15 +48,16 @@ const Posts = ({user, watchingUser, type, queryObject, setResults, savedPostsDat
                     setpart(prev=>prev+1);
                 }
                 else{
-                    console.log(err.message)
+                    console.log(err?.message)
                 }
                 setPostsLoading(false)
+                setResponseCame(true)
             });
             setPostsLoading(false)
             return;
         }
 
-        if((posts.length < 1) || part > helpers.array3x3(posts).length){
+        if((posts?.length < 1) || part > helpers.array3x3(posts).length){
             setPostsLoading(false);
             return
         }
@@ -66,6 +69,7 @@ const Posts = ({user, watchingUser, type, queryObject, setResults, savedPostsDat
         } catch(e){
             console.log(e);
         }finally{
+            setResponseCame(true)
             setPostsLoading(false)
         }
     }   
@@ -81,11 +85,12 @@ const Posts = ({user, watchingUser, type, queryObject, setResults, savedPostsDat
 
     const setFeed = async()=>{
         try{
-            const response = await helpers.getPosts(type,watchingUser.userID);
+            const response = await helpers.getPosts(type,watchingUser?.userID);
             setposts(response);
             setResponseCame(true)
             feedSet = true;
         } catch(e){
+            setResponseCame(true)
             alert("An error occured while loading posts" + e);
         }
         
@@ -118,7 +123,7 @@ const Posts = ({user, watchingUser, type, queryObject, setResults, savedPostsDat
                 <PostCreate onPostCreate={refreshPosts}  getUser={user}/>
             }
                 {
-                    !postsLoading && postsData.length > 0?
+                    !postsLoading && postsData?.length > 0?
                     <div className='text-muted cp mt-5' onClick={refreshPosts}>Reload Posts</div>:
                     ""
                 }
@@ -130,13 +135,12 @@ const Posts = ({user, watchingUser, type, queryObject, setResults, savedPostsDat
             }
             <div className='d-flex justify-content-center mb-4 lr-100'>
                 {
-                    !postsLoading && posts.length > postsData.length ? <div className="cp mt-2" onClick={()=>{handleLoad(false)}}>Load More</div> : ""
+                    !postsLoading && posts?.length > postsData?.length ? <div className="cp mt-2" onClick={()=>{handleLoad(false)}}>Load More</div> : ""
                 }
                 {postsLoading?
                     <PostsLoading/>:
-                    postsData.length === 0? (responseCame ?
+                    postsData?.length === 0? (responseCame && postsData?.length === 0 ?
                     <div className='mt-4'>No Posts Found</div>:<PostsLoading/>) : ""
-
                 }
             </div>
         </div>
