@@ -46,9 +46,9 @@ const Account = () => {
 
 
     return(
-        <div className='accounts_main'>
+        <div className='accounts_main lr-100'>
             {!editAccount &&
-            <div>
+            <div className='lr-100'>
                 <div className='userProfile lr-100'>
                     <img src={config.userData?.profilePhoto ? config.userData?.profilePhoto : config.user_default}
                     alt={`${user?.username ?user?.username:"Loading.."}`} 
@@ -64,7 +64,7 @@ const Account = () => {
             }
 
             {!editAccount &&
-            <div>
+            <div className='lr-100'>
                 <div className='cp_all margin-between-2 d-flex mt-4 fs-5 justify-content-center normal_a_tag'>
                     <a href="#account_post_show" className={`${userPosts?"":"text-muted"}`} onClick={()=>{
                         setuserPosts(true);
@@ -77,7 +77,7 @@ const Account = () => {
                 <div className='account_post_show lr-100' id="account_post_show">
                 {loading? 
                     <PostsLoading/>:
-                    <div className='account_post_show'>
+                    <div className='account_post_show lr-100'>
                         {likedPosts && <Posts user={user} watchingUser={user} type="liked" typeChange={true}/>}
                         {userPosts && <Posts user={user} watchingUser={user} type="user" typeChange={true}/>}
                     </div>
