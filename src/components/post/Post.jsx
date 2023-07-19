@@ -84,7 +84,7 @@ const Post = ({postData, user, onPostDeleted}) => {
                     {liked?<span className='text-danger'>Liked</span>:"Like"} {`(${likedPostCount})`}
                     </div>
                     <div id="commentButton" className={`${commentShow?"text-danger":"text-gray"} ml-2`} style={{cursor:"pointer"}} onClick={handleComment}>
-                        Comments ({postData?.comments.length})
+                        Comments ({postData?.comments?.length})
                     </div>
                 </div>
 
