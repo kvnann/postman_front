@@ -1,4 +1,5 @@
 import axios from 'axios'
+import React from 'react'
 import {config} from './config'
 
 const helpers = {}
@@ -68,6 +69,15 @@ helpers.auth = async()=>{
   catch(e){
       return {newAuth:false,userData:false};
   }
+}
+
+helpers.formatTextWithLineBreaks = (text) => {
+  return text.split('\n').map((line, index) => (
+    <React.Fragment key={index}>
+      {line}
+      <br />
+    </React.Fragment>
+  ));
 }
 
 helpers.getUserAndAuth = async(username)=>{

@@ -76,7 +76,7 @@ const Post = ({postData, user, onPostDeleted}) => {
                 </div>
             </div>
             <div className='postText'>
-            {postData?.text}
+            {helpers.formatTextWithLineBreaks(postData?.text)}
             </div>
             <div className='mt-3 d-flex flex-row justify-content-between'>
                 <div className='d-flex flex-row justify-content-between'>
