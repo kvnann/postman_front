@@ -2,6 +2,7 @@ import {useState} from 'react'
 import {config} from '../../config'
 import {helpers} from '../../helpers'
 import {Loading} from '../index'
+import imageCompression from 'browser-image-compression';
 
 const EditAccount = ({handleBack}) => {
     const [selectedFile, setSelectedFile] = useState(null);
@@ -89,6 +90,29 @@ const EditAccount = ({handleBack}) => {
       }
     };
 
+    const handleImageUpload = async(event)=>{
+
+      const imageFile = event.target.files[0];
+      console.log('originalFile instanceof Blob', imageFile instanceof Blob);
+      console.log(`originalFile size ${imageFile.size / 1024 / 1024} MB`);
+    
+      const options = {
+        maxSizeMB: 1,
+        maxWidthOrHeight: 1920,
+        useWebWorker: true,
+      }
+      try {
+        const compressedFile = await imageCompression(imageFile, options);
+        console.log('compressedFile instanceof Blob', compressedFile instanceof Blob);
+        console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`);
+    
+        setSelectedFile(compressedFile)
+      } catch (error) {
+        console.log(error);
+      }
+    
+    }
+
   return (
     <div>
         <div>
@@ -100,7 +124,7 @@ const EditAccount = ({handleBack}) => {
                 <img src={filePreview? filePreview : config.userData?.profilePhoto ? config.userData?.profilePhoto : config.user_default}  alt="Profile pic upload" style={{borderRadius:"50%"}} width="150" height="150"/>
               </div>
                 <input type="file" onChange={(e)=>{
-                    setSelectedFile(e.target.files[0]);
+                    handleImageUpload(e)
                     handleFileUpload(e)
                   }} className='btn-light'/>
             </div>

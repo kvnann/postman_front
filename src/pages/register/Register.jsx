@@ -4,6 +4,7 @@ import {config} from '../../config'
 import {Loading} from '../../components'
 import RegisterForm from './components/RegisterForm';
 import ProfilePicture from './components/ProfilePicture';
+import imageCompression from 'browser-image-compression';
 
 const Register = () => {
   const [loading, setLoading] = useState(false)
@@ -28,8 +29,27 @@ const Register = () => {
     setStep(0);
   }
 
-  const fileSelect = (e)=>{
-    setSelectedFile(e.target.files[0]);
+  const handleImageUpload = async(event)=>{
+
+    const imageFile = event.target.files[0];
+    console.log('originalFile instanceof Blob', imageFile instanceof Blob);
+    console.log(`originalFile size ${imageFile.size / 1024 / 1024} MB`);
+  
+    const options = {
+      maxSizeMB: 1,
+      maxWidthOrHeight: 1920,
+      useWebWorker: true,
+    }
+    try {
+      const compressedFile = await imageCompression(imageFile, options);
+      console.log('compressedFile instanceof Blob', compressedFile instanceof Blob);
+      console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`);
+  
+      setSelectedFile(compressedFile)
+    } catch (error) {
+      console.log(error);
+    }
+  
   }
 
   const submit = async (e) => {
@@ -80,7 +100,7 @@ const Register = () => {
           <div className='login_card_right'>
             <div className='text-warning mb-2' style={{width:"100%",display:"flex",justifyContent:"center",alignItems:"center"}}><span style={{width:"200px"}}>{errorMessage}</span></div>
             {
-              step===0?<RegisterForm handleNext={handleNext} handleErrorMessage={setErrorMessage}/>:step===1?<ProfilePicture handleFileSelect={fileSelect} handleBack={handlePrev} handleSubmit={submit}/>:"Registraiton is closed"
+              step===0?<RegisterForm handleNext={handleNext} handleErrorMessage={setErrorMessage}/>:step===1?<ProfilePicture handleFileSelect={handleImageUpload} handleBack={handlePrev} handleSubmit={submit}/>:"Registraiton is closed"
             }
           </div>
         </div>

@@ -114,6 +114,27 @@ helpers.loadPosts = async(postsID,part)=>{
   }
 }
 
+
+
+helpers.loadPostsLow = async(postsID,part)=>{
+  try{
+      const response = await axios.post(`${config.backend_host}/post/load_posts_low`,{
+          postsID,
+          part
+      },{
+          headers:{
+              "Content-Type":"application/json",
+              "accesstoken":`Bearer ${localStorage.getItem('accessToken')}`,
+              "refreshtoken":`Refresh ${localStorage.getItem('refreshToken')}`
+          }
+      });
+      return response?.data?.postData;
+  }catch(e){
+      console.log(e);
+      return false;
+  }
+}
+
 helpers.search = async(query, type, callback)=>{
   try{
     const response = await axios.post(`${config.backend_host}/search`,{

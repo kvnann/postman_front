@@ -57,14 +57,20 @@ const Posts = ({user, watchingUser, type, queryObject, setResults, savedPostsDat
             return;
         }
 
-        if((posts?.length < 1) || part > helpers.array3x3(posts).length){
+        // if((posts?.length < 1) || part > helpers.array3x3(posts).length){
+        //     setPostsLoading(false);
+        //     return
+        // }
+
+        if((posts?.length < 1) || part > posts?.length){
             setPostsLoading(false);
             return
         }
 
         try{
-            const response = await helpers.loadPosts(posts,part);
-            setpostsData([...postsData, ...Object.values(response)]);
+            const response = await helpers.loadPostsLow(posts,part);
+            setpostsData([...postsData, response]);
+            // setpostsData([...postsData, ...Object.values(response)]);
             setpart(prev=>prev+1);
         } catch(e){
             console.log(e);
