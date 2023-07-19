@@ -32,7 +32,7 @@ const PostCreate = ({onPostCreate,getUser}) => {
                 onChange={(e) => setPostText(e.target.value)} 
                 className='mTextbox mb-3' 
                 rows="4" cols="50" 
-                maxLength="1000"
+                maxLength="10000"
             ></textarea>
             <div>
                 <button className="btn-light mb-2" id="submit" type='submit'>Submit</button>
