@@ -24,10 +24,11 @@ const User = () => {
     const getUser = async()=>{
         if(!auth && !authStarted){
             authStarted = true;
+            console.log(username)
             const {newAuth, userData, watchingUserData} = await helpers.getUserAndAuth(username);
             if(!newAuth){
                 alert("Cannot show the user page. Maybe it doesn't exist");
-                window.location= "feed"
+                // window.location= "feed"
             }
             setAuth(newAuth);
             setuser(userData);
@@ -63,7 +64,7 @@ const User = () => {
 
                         <div className='accounts_main'>
                             <div className='userProfile lr-100'>
-                                <img src={config.user_default} 
+                                <img src={watchingUser?.profilePhoto ? helpers.parseProfilePhoto(watchingUser?.profilePhoto) : config.user_default} 
                                 alt={`${watchingUser?.username ? watchingUser?.username:"Loading.."}`} 
                                 style={{height:"200px",width:"200px",borderRadius:"100%", border:"4px solid black", marginRight:"10px"}} />
                                 <div className='display-4'>{`${watchingUser?.username ? watchingUser?.username:"Loading..."}`}</div>
